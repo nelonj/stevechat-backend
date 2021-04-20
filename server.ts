@@ -23,6 +23,22 @@ export const app = express();
 export const Express = express;
 export const Cors = cors;
 
+client.connect();
+
+app.get("/", async (req, res) => {
+    try{
+        const dbres = await client.query('select * from messages')
+        res.json((dbres.rows))
+    }
+    catch {
+        console.log('OH NOOOOO')
+        res.status(500).json({
+          message: 'Cannot select all from blog table'
+        })
+      }}
+)
+
+
 //Start the server on the given port
 const port = process.env.PORT;
 if (!port) {
