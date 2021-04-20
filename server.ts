@@ -33,7 +33,7 @@ app.get("/", async (req, res) => {
     catch {
         console.log('OH NOOOOO')
         res.status(500).json({
-          message: 'Cannot select all from blog table'
+          message: 'Cannot select all from messages table'
         })
       }}
 )
