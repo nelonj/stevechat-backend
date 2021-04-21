@@ -23,6 +23,8 @@ export const app = express();
 export const Express = express;
 export const Cors = cors;
 
+app.use(Express.json()); //add body parser to each following route handler
+app.use(Cors()) //add CORS support to each following route handler
 client.connect();
 
 app.get("/", async (req, res) => {
@@ -37,6 +39,22 @@ app.get("/", async (req, res) => {
         })
       }}
 )
+
+app.post("/", async (req, res) => {
+    try {
+        const {messageText, userId} = req.body
+        await client.query('INSERT INTO messages (messagetext, userid) VALUES ($1, $2)', [messageText, userId])
+        res.status(201).json({
+        message: 'Successful message insert'
+        })
+    } 
+    catch {
+        console.log('OH NOOOOO')
+        res.status(500).json({
+            message: 'Cannot select all from messages table'
+        })
+    }
+})
 
 
 //Start the server on the given port
